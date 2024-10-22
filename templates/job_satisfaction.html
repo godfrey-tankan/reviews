@@ -11,7 +11,6 @@
 <body>
     <form method="post">
         <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
-        <br/>
         <p class="info-icon">Please rate your satisfaction level for the following questions:
                 <span clas='icon-icon' >ℹ️</span>
 
@@ -26,7 +25,7 @@
         {% csrf_token %}
         {% for field in form %}
             <div>
-                <h2>{{ forloop.counter }}. {{ field.label }}</h2>
+                <h3>{{ forloop.counter }}. {{ field.label }}</h3>
                 {{ field }}  <!-- This will render the field (radio buttons) -->
             </div>
         {% empty %}
