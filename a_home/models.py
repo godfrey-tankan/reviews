@@ -2,39 +2,44 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class SurveyAnswer(models.Model):
-    question_id = models.IntegerField() 
-    answer = models.TextField()
-    submitted_at = models.DateTimeField(auto_now_add=True)
-
-class Question(models.Model):
-    TEXT = 'text'
-    MULTIPLE_CHOICE = 'multiple_choice'
-    RATING_SCALE = 'rating'
-
-    QUESTION_TYPES = [
-        (TEXT, 'Text'),
-        (MULTIPLE_CHOICE, 'Multiple Choice'),
-        (RATING_SCALE, 'Rating Scale'),
+class JobSatisfactionQuestion(models.Model):
+    QUESTION_CATEGORY_CHOICES = [
+        ('pay', 'Pay'),
+        ('promotion', 'Promotion'),
+        ('supervision', 'Supervision'),
+        ('fringe_benefits', 'Fringe Benefits'),
+        ('contingent_rewards', 'Contingent Rewards'),
+        ('operating_conditions', 'Operating Conditions'),
+        ('coworkers', 'Coworkers'),
+        ('nature_of_work', 'Nature of Work'),
+        ('communication', 'Communication'),
+        ('health_and_safety', 'Health and Safety'),
     ]
 
     question_text = models.CharField(max_length=500)
-    question_type = models.CharField(
-        max_length=50,
-        choices=QUESTION_TYPES,
-        default=TEXT
-    )
-    is_required = models.BooleanField(default=True)  
+    category = models.CharField(max_length=50, choices=QUESTION_CATEGORY_CHOICES)
+    required = models.BooleanField(default=True)  # Mandatory or optional
 
     def __str__(self):
         return self.question_text
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
-    choice_text = models.CharField(max_length=200) 
+
+class LikertScaleAnswer(models.Model):
+    RESPONSE_CHOICES = [
+        (1, 'Disagree very much'),
+        (2, 'Disagree moderately'),
+        (3, 'Disagree slightly'),
+        (4, 'Agree slightly'),
+        (5, 'Agree moderately'),
+        (6, 'Agree very much'),
+    ]
+
+    question = models.ForeignKey(JobSatisfactionQuestion, related_name='answers', on_delete=models.CASCADE)
+    response = models.IntegerField(choices=RESPONSE_CHOICES)
+    response_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.choice_text
+        return f"Answer to {self.question.question_text}: {self.get_response_display()}"
 
 class DemographicData(models.Model):
     GENDER_CHOICES = [
