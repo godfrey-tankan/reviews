@@ -197,6 +197,7 @@ def feedback_list(request):
     feedbacks = LikertScaleAnswer.objects.select_related('question').order_by('-response_date')[:3]
     return render(request, 'feedbacks/feedback_list.html', {'feedbacks': feedbacks})
 
+
 def feedback_detail(request):
     users = User.objects.all()
     feedbacks = DemographicData.objects.filter(user_id__in=users).order_by('-response_date')
