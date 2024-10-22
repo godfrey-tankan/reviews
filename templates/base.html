@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="https://unpkg.com/htmx.org/dist/htmx.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style type="text/tailwindcss">
+    {% comment %} <style type="text/tailwindcss">
         [x-cloak] { 
             display: none !important; 
         }
@@ -117,7 +117,7 @@
         .alert-success { @apply bg-green-400 }
         .alert-warning { @apply bg-amber-400 }
         .alert-danger { @apply bg-amber-500 }
-    </style>
+    </style> {% endcomment %}
 </head>
 <body class="{% block class %}{% endblock %}">
 	
@@ -131,12 +131,12 @@
         
 
     <!-- Sidebar -->
-    <nav id="sidebar" class="bg-gray-800 text-white w-64 h-screen p-5 fixed top-0 left-0 transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:w-64">
+    {% comment %} <nav id="sidebar" class="bg-gray-800 text-white w-64 h-screen p-5 fixed top-0 left-0 transform -translate-x-full transition-transform duration-300 md:translate-x-0 md:relative md:w-64">
         <h2 class="text-lg font-bold mb-5">Menu</h2>
         <ul class="navitems">
             <li><a href="{% url 'start' %}" class="hoverlist">Participate</a></li>
         </ul>
-    </nav>
+    </nav> {% endcomment %}
 {% endif %}
 
     <!-- Main Content Area -->
