@@ -19,6 +19,12 @@ def home_view(request):
         return redirect('staff_dashboard')
     return render(request,'home.html')
 
+
+from django.db.models import Subquery, OuterRef, Avg, Count, Case, When, IntegerField
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import LikertScaleAnswer, DemographicData
+
 @login_required
 def staff_dashboard_view(request):
     QUALIFICATION_VALUE_MAP = {
@@ -29,8 +35,10 @@ def staff_dashboard_view(request):
         'undergraduate': 4,
         'postgraduate': 5,
     }
+
     total_participants = LikertScaleAnswer.objects.values('user_id').distinct().count()
 
+    # Calculate average feedback for each department
     department_feedback = DemographicData.objects.annotate(
         avg_feedback=Subquery(
             LikertScaleAnswer.objects.filter(user_id=OuterRef('user_id')).values('response').annotate(
@@ -41,6 +49,7 @@ def staff_dashboard_view(request):
 
     most_proper_department = department_feedback.first()
 
+    # Calculate average qualification
     average_qualification = DemographicData.objects.aggregate(
         avg_qualification=Avg(
             Case(
@@ -62,13 +71,30 @@ def staff_dashboard_view(request):
             None
         )
 
+    # Determine critical branch needing attention using LikertScaleAnswer directly
+    critical_branch = DemographicData.objects.annotate(
+        avg_feedback=Avg('user_id__likertscaleanswer__response')  # Adjusting the query to reflect proper relations
+    ).order_by('avg_feedback').first()
+
+    # Get the most top 3 complaints (assuming complaints are in a specific question)
+    top_complaints = LikertScaleAnswer.objects.values('question__question_text').annotate(
+        complaint_count=Count('id')
+    ).order_by('-complaint_count')[:3]
+
+    # Format complaints for display
+    top_complaints_list = [complaint['question__question_text'] for complaint in top_complaints]
+
+    # Pass the new context variables
     context = {
         'total_participants': total_participants,
         'most_proper_department': most_proper_department,
         'average_qualification': average_qualification_str,
+        'critical_branch': critical_branch,
+        'top_complaints': top_complaints_list,
     }
 
     return render(request, 'staff/staff_dashboard.html', context)
+
 
 @login_required
 def aggregated_feedback_view(request):

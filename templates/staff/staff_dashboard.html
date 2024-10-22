@@ -10,36 +10,74 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9; /* Light gray background */
+            color: #333; /* Dark text color for readability */
+        }
+        header {
+            background: #000; /* Black header background */
+            color: white; /* White text for contrast */
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
         }
         .dashboard {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: space-around;
+            margin-top: 20px;
         }
         .card {
-            background: #fff;
+            background: white; /* White card background */
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             flex: 1 1 calc(30% - 20px);
             min-width: 250px;
             max-width: 300px;
+            height: 200px; /* Increased height for cards */
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.02);
         }
         .card h3 {
             margin: 0;
             font-size: 24px;
-            color: #333;
+            color: #000; /* Black text for card headers */
         }
-        .card p {
+        .card p, .card ul {
             font-size: 18px;
-            color: #555;
+            color: #555; /* Dark gray text for readability */
+            margin-top: 10px;
+        }
+        .view-more-button {
+            margin: 20px 0;
+            display: block;
+            text-align: center;
+            padding: 10px 20px;
+            background-color: #007bff; /* Primary button color */
+            color: white; /* White text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .view-more-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
         }
     </style>
 </head>
 <body>
-    <h1>Staff Dashboard</h1>
+    <header>
+        <h1>Staff Dashboard</h1>
+    </header>
     <div class="dashboard">
         <div class="card">
             <h3>Total Participants</h3>
@@ -65,28 +103,7 @@
                 {% endif %}
             </p>
         </div>
-        <div class="card">
-            <h3>Critical Branch That Needs Attention</h3>
-            <p>
-                {% if critical_branch %}
-                    {{ critical_branch.name }} - Attention Score: {{ critical_branch.attention_score|floatformat:2 }}
-                {% else %}
-                    No data available.
-                {% endif %}
-            </p>
-        </div>
-        <div class="card">
-            <h3>Most Top 3 Complaints</h3>
-            <ul>
-                {% if top_complaints %}
-                    {% for complaint in top_complaints %}
-                        <li>{{ complaint }}</li>
-                    {% endfor %}
-                {% else %}
-                    <li>No complaints available.</li>
-                {% endif %}
-            </ul>
-        </div>
     </div>
+    <a href="{% url 'detailed_feedback_page' %}" class="view-more-button">View More Feedback</a>
 </body>
 </html>
