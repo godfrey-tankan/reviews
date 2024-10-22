@@ -1,0 +1,29 @@
+{% extends 'layouts/blank.html' %}
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-4xl font-bold mb-4">Groups</h1>
+    <a href="{% url 'group_create' %}" class="button bg-green-500 hover:bg-green-600">Add Group</a>
+    <table class="table-auto w-full border-collapse mt-4">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Description</th>
+                <th class="px-4 py-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr class="border-b">
+                <td class="border px-4 py-2"><a href="{% url 'group_detail' group.id %}">{{ group.name }}</a></td>
+                <td class="border px-4 py-2">{{ group.description }}</td>
+                <td class="border px-4 py-2">
+                    <a href="{% url 'group_edit' group.id %}" class="text-blue-500">Edit</a> |
+                    <a href="{% url 'group_delete' group.id %}" class="text-red-500">Delete</a> |
+                    <a href="{% url 'add_individual_to_group' group.id %}" class="text-green-500">Add Individuals</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

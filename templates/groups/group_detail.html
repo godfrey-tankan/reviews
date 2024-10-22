@@ -1,0 +1,30 @@
+{% extends 'layouts/blank.html' %}
+
+{% block content %}
+<div class="container mx-auto py-8">
+    <h1 class="text-4xl font-bold mb-4">Group Details</h1>
+
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <h2 class="text-2xl font-semibold mb-4">{{ group.name }}</h2>
+        <p class="mb-2">Group ID: {{ group.id }}</p>
+        
+        <h3 class="text-xl font-bold mt-6">Members:</h3>
+
+        {% if group.members.count > 0 %}
+            <ul class="list-disc pl-6">
+                {% for member in group.members.all %}
+                    <li class="mb-2">{{ member.firstname }} {{ member.surname }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No members in this group yet.</p>
+        {% endif %}
+
+        <div class="flex justify-end mt-4">
+            <a href="{% url 'add_individual_to_group' group.id %}" class="button bg-indigo-600 text-white px-4 py-2 rounded">
+                Add Individuals to Group
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

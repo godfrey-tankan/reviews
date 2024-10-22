@@ -1,0 +1,60 @@
+{% extends 'layouts/blank.html' %}
+
+{% block content %}
+<div class="container mx-auto py-8 px-4">
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-4">
+        <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-0">All Individuals</h1>
+        <a href="{% url 'individual_create' %}" class="button button-green text-xs sm:text-sm px-3 py-2">
+            Add Individual
+        </a>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full border-collapse text-xs sm:text-sm">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-2 sm:px-4 py-2">First Name</th>
+                    <th class="px-2 sm:px-4 py-2 hidden sm:table-cell">Surname</th>
+                    <th class="px-2 sm:px-4 py-2">Email</th>
+                    <th class="px-2 sm:px-4 py-2">Phone</th>
+                    <th class="px-2 sm:px-4 py-2 hidden md:table-cell">Address</th>
+                    <th class="px-2 sm:px-4 py-2 hidden md:table-cell">City</th>
+                    <th class="px-2 sm:px-4 py-2 hidden lg:table-cell">Date of Birth</th>
+                    <th class="px-2 sm:px-4 py-2 hidden lg:table-cell">Position</th>
+                    <th class="px-2 sm:px-4 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if individuals %}
+                    {% for individual in individuals %}
+                        <tr class="border-b">
+                            <td class="border px-2 sm:px-4 py-2">{{ individual.firstname }}</td>
+                            <td class="border px-2 sm:px-4 py-2 hidden sm:table-cell">{{ individual.surname }}</td>
+                            <td class="border px-2 sm:px-4 py-2">{{ individual.email }}</td>
+                            <td class="border px-2 sm:px-4 py-2">{{ individual.phone }}</td>
+                            <td class="border px-2 sm:px-4 py-2 hidden md:table-cell">{{ individual.address }}</td>
+                            <td class="border px-2 sm:px-4 py-2 hidden md:table-cell">{{ individual.city }}</td>
+                            <td class="border px-2 sm:px-4 py-2 hidden lg:table-cell">{{ individual.dob }}</td>
+                            <td class="border px-2 sm:px-4 py-2 hidden lg:table-cell">{{ individual.position }}</td>
+                            <td class="border px-2 sm:px-4 py-2 text-center">
+                                <a href="{% url 'individual_edit' individual.id %}" class="button button-blue text-xs sm:text-sm">Edit</a>
+                                <span class="hidden sm:inline"> | </span>
+                                <a href="{% url 'individual_delete' individual.id %}" class="button button-red text-xs sm:text-sm">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9" class="text-center py-4">
+                            No individuals found.
+                            <a href="{% url 'individual_create' %}" class="button bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded inline-block mt-2 text-xs sm:text-sm">
+                                Add?
+                            </a>
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
