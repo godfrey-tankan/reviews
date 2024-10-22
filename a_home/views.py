@@ -45,3 +45,6 @@ def job_satisfaction_view(request):
         form = JobSatisfactionForm(questions=questions)
 
     return render(request, 'job_satisfaction.html', {'form': form})
+
+def thank_you(request):
+    return render(request, 'thank_you.html')
