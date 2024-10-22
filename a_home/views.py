@@ -17,6 +17,16 @@ def home_view(request):
     all_groups =Group.objects.all()
     return render(request,'home.html',{'users': all_users,'groups': all_groups})
 
+@login_required
+def demographic_data_view(request):
+    if request.method == 'POST':
+        form = DemographicDataForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('thank_you')
+    else:
+        form = DemographicDataForm()
+    return render(request, 'demographic_data.html', {'form': form})
 
 
 @login_required
