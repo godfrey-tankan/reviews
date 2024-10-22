@@ -61,7 +61,7 @@
             display: block;
             text-align: center;
             padding: 10px 20px;
-            background-color: #007bff; /* Primary button color */
+            background-color: #555; /* Primary button color */
             color: white; /* White text */
             border: none;
             border-radius: 5px;
@@ -104,7 +104,7 @@
             </p>
         </div>
     </div>
-    <button onclick="window.location.href='{% url 'feedback_detail' %}'">Show All Feedback</button>
+    <a href="{% url 'feedback_detail' %}" class="view-more-button">View More Feedback</a>
 
 </body>
 </html>
