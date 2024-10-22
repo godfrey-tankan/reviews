@@ -9,12 +9,22 @@
     <link rel="stylesheet" href="{% static 'css/form_styles.css' %}">
 </head>
 <body>
-    <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
     <form method="post">
+        <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
+        <br/>
+            <span clas='icon-icon' >ℹ️</span>
+            <p class="info-icon">Please rate your satisfaction level for the following questions:</p>
+        <div class="tooltip">
+            Your responses will remain anonymous and confidential.<br>
+            We value your feedback and ensure that your data will only be used for statistical purposes.
+        </div>
+        <br/>
+        <br/>
+
         {% csrf_token %}
         {% for field in form %}
             <div>
-                <label>{{ field.label }}</label>
+                <h4>{{ field.label }}</h4>
                 {{ field }}  <!-- This will render the field (radio buttons) -->
             </div>
         {% empty %}

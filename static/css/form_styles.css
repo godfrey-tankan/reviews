@@ -129,3 +129,22 @@ button[type="submit"]:hover {
 .tooltip:hover {
     display: block;
 }
+.icon-icon {
+    display: inline-block; 
+    transition: transform 4s ease;  
+}
+
+/* Keyframes for spinning */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);  /* Start at 0 degrees */
+    }
+    to {
+        transform: rotate(360deg);  /* End at 360 degrees */
+    }
+}
+
+/* Class to trigger the spin animation */
+.spin {
+    animation: spin 4s linear;  /* Use the spin keyframes for 4 seconds */
+}
