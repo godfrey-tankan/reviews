@@ -68,6 +68,7 @@ class DemographicDataForm(forms.ModelForm):
             'designation': forms.Select,
             'contract_type': forms.RadioSelect,  
         }
+        
 
 class JobSatisfactionForm(forms.Form):
     def __init__(self, *args, **kwargs):

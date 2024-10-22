@@ -82,16 +82,22 @@ class DemographicData(models.Model):
         ('fixed_term', 'Fixed –Term Contract'),
         ('permanent', 'Permanent Contract')
     ]
+    DEPARTMENT_CHOICES = [
+        ('HR', 'Human Resources'),
+        ('IT', 'Information Technology'),
+        ('FIN', 'Finance'),
+        ('MKT', 'Marketing'),
+        ('DEV', 'Development'),
+    ]
     
-    # Demographic Fields
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
-    age_group = models.CharField(max_length=10, choices=AGE_GROUP_CHOICES)
-    work_experience = models.CharField(max_length=10, choices=EXPERIENCE_CHOICES)
-    highest_qualification = models.CharField(max_length=20, choices=QUALIFICATION_CHOICES)
-    designation = models.CharField(max_length=30, choices=DESIGNATION_CHOICES)
-    department = models.CharField(max_length=100)  # Text input for department
-    contract_type = models.CharField(max_length=15, choices=CONTRACT_CHOICES)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='male')
+    age_group = models.CharField(max_length=10, choices=AGE_GROUP_CHOICES, default='20_below')
+    work_experience = models.CharField(max_length=10, choices=EXPERIENCE_CHOICES, default='5_below')
+    highest_qualification = models.CharField(max_length=20, choices=QUALIFICATION_CHOICES, default='o_level')
+    designation = models.CharField(max_length=30, choices=DESIGNATION_CHOICES, default='line_employees')
+    department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, default='MKT')
+    contract_type = models.CharField(max_length=15, choices=CONTRACT_CHOICES, default='permanent')
 
     def __str__(self):
         return f"{self.gender}, {self.age_group}, {self.designation}"
