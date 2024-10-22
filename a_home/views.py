@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from a_bot.views import get_text_message_input,send_message
 from django.contrib.auth.decorators import login_required
-from .models import SurveyAnswer
+from .models import *
 
 
 # Create your views here.
@@ -30,13 +30,6 @@ def demographic_data_view(request):
         form = DemographicDataForm()
     return render(request, 'demographic_data.html', {'form': form})
 
-
-@login_required
-def survey_results_view(request):
-    if request.user.is_staff: 
-        survey_answers = SurveyAnswer.objects.all() 
-        return render(request, 'survey_results.html', {'survey_answers': survey_answers})
-    return redirect('home')  
 
 @login_required
 def job_satisfaction_view(request):
