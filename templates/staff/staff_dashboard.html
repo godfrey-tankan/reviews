@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Staff Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Add your CSS here -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,13 +59,34 @@
             <h3>Average Qualifications</h3>
             <p>
                 {% if average_qualification %}
-                    {{ average_qualification['highest_qualification__avg']|floatformat:2 }}
+                    {{ average_qualification }}
                 {% else %}
                     No data available.
                 {% endif %}
             </p>
         </div>
-        <!-- Add more cards as needed -->
+        <div class="card">
+            <h3>Critical Branch That Needs Attention</h3>
+            <p>
+                {% if critical_branch %}
+                    {{ critical_branch.name }} - Attention Score: {{ critical_branch.attention_score|floatformat:2 }}
+                {% else %}
+                    No data available.
+                {% endif %}
+            </p>
+        </div>
+        <div class="card">
+            <h3>Most Top 3 Complaints</h3>
+            <ul>
+                {% if top_complaints %}
+                    {% for complaint in top_complaints %}
+                        <li>{{ complaint }}</li>
+                    {% endfor %}
+                {% else %}
+                    <li>No complaints available.</li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
 </body>
 </html>

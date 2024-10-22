@@ -8,31 +8,64 @@ from django.views.decorators.csrf import csrf_exempt
 from a_bot.views import get_text_message_input,send_message
 from django.contrib.auth.decorators import login_required
 from .models import *
-from django.db.models import Count, Sum, Avg
+from django.db.models import Count, Avg, OuterRef, Subquery,When, IntegerField, Case
 
 
 
 
 # Create your views here.
 def home_view(request):
+    if request.user.is_staff:
+        return redirect('staff_dashboard')
     return render(request,'home.html')
 
 @login_required
 def staff_dashboard_view(request):
+    QUALIFICATION_VALUE_MAP = {
+        'below_o': 0,
+        'o_level': 1,
+        'a_level': 2,
+        'diploma': 3,
+        'undergraduate': 4,
+        'postgraduate': 5,
+    }
     total_participants = LikertScaleAnswer.objects.values('user_id').distinct().count()
-    
-    most_proper_department = DemographicData.objects.values('department').annotate(
-        avg_feedback=Avg('likertscaleanswer__response')
-    ).order_by('-avg_feedback').first()
+
+    department_feedback = DemographicData.objects.annotate(
+        avg_feedback=Subquery(
+            LikertScaleAnswer.objects.filter(user_id=OuterRef('user_id')).values('response').annotate(
+                avg_response=Avg('response')
+            ).values('avg_response')[:1]
+        )
+    ).values('department', 'avg_feedback').order_by('-avg_feedback')
+
+    most_proper_department = department_feedback.first()
 
     average_qualification = DemographicData.objects.aggregate(
-        Avg('highest_qualification')
-    )
+        avg_qualification=Avg(
+            Case(
+                When(highest_qualification='below_o', then=0),
+                When(highest_qualification='o_level', then=1),
+                When(highest_qualification='a_level', then=2),
+                When(highest_qualification='diploma', then=3),
+                When(highest_qualification='undergraduate', then=4),
+                When(highest_qualification='postgraduate', then=5),
+                output_field=IntegerField(),
+            )
+        )
+    )['avg_qualification']
+
+    average_qualification_str = None
+    if average_qualification is not None:
+        average_qualification_str = next(
+            (key for key, value in QUALIFICATION_VALUE_MAP.items() if value == int(round(average_qualification))),
+            None
+        )
 
     context = {
         'total_participants': total_participants,
         'most_proper_department': most_proper_department,
-        'average_qualification': average_qualification,
+        'average_qualification': average_qualification_str,
     }
 
     return render(request, 'staff/staff_dashboard.html', context)
