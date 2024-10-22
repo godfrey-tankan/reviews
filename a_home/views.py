@@ -11,11 +11,9 @@ from .models import *
 
 
 # Create your views here.
-@login_required
 def home_view(request):
-    all_users = Individual.objects.all()
-    all_groups =Group.objects.all()
-    return render(request,'home.html',{'users': all_users,'groups': all_groups})
+   
+    return render(request,'home.html')
 
 @login_required
 def demographic_data_view(request):
