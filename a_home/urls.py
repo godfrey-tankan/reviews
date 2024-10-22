@@ -8,6 +8,9 @@ urlpatterns = [
     path('job-satisfaction/', job_satisfaction_view, name='job_satisfaction'),
     path('aggregated-feedback/', aggregated_feedback_view, name='aggregated_feedback'),
     path('staff-dashboard/', staff_dashboard_view, name='staff_dashboard'),
+    path('feedbacks/', feedback_list, name='feedback_list'),
+    path('feedbacks/details/', feedback_detail, name='feedback_detail'),
+    path('feedback/<int:feedback_id>/details/', feedback_details, name='detailed_feedback_page'),
     # path('members/',test,name='members')
     
 ]

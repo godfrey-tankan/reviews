@@ -1,0 +1,41 @@
+<!-- feedback_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Feedbacks</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h2>All User Feedbacks</h2>
+    <div class="feedback-list">
+        {% for feedback in feedbacks %}
+            <div class="feedback-item" onclick="showPopup('{{ feedback.id }}')">
+                <p>User: Anonymous</p>
+                <p>Question: {{ feedback.question.question_text }}</p>
+                <p>Response: {{ feedback.get_response_display }}</p>
+                <p>Date: {{ feedback.response_date|date:"Y-m-d H:i" }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="popup" class="popup" style="display:none;">
+        <div class="popup-content">
+            <span class="close" onclick="document.getElementById('popup').style.display='none'">&times;</span>
+            <h3>Feedback Details</h3>
+            <div id="popup-details"></div>
+        </div>
+    </div>
+
+    <script>
+        function showPopup(feedbackId) {
+            fetch(`/feedback/${feedbackId}/details/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('popup-details').innerHTML = data.details;
+                    document.getElementById('popup').style.display = 'block';
+                });
+        }
+    </script>
+</body>
+</html>

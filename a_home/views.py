@@ -136,7 +136,7 @@ def aggregated_feedback_view(request):
         'salary_complaints': salary_complaints
     }
 
-    return render(request, 'aggregated_feedback.html', context)
+    return render(request, 'feedbacks/aggregated_feedback.html', context)
 
 @login_required
 def demographic_data_view(request):
@@ -171,3 +171,21 @@ def job_satisfaction_view(request):
 
 def thank_you(request):
     return render(request, 'thank_you.html')
+
+
+def feedback_details(request, feedback_id):
+    feedback = get_object_or_404(LikertScaleAnswer, id=feedback_id)
+    details = {
+        'question': feedback.question.question_text,
+        'response': feedback.get_response_display(),
+        'date': feedback.response_date.strftime('%Y-%m-%d %H:%M'),
+    }
+    return JsonResponse({'details': details})
+
+def feedback_list(request):
+    feedbacks = LikertScaleAnswer.objects.select_related('question').order_by('-response_date')[:3]
+    return render(request, 'feedbacks/feedback_list.html', {'feedbacks': feedbacks})
+
+def feedback_detail(request):
+    feedbacks = LikertScaleAnswer.objects.select_related('question').all()
+    return render(request, 'feedbacks/feedback_detail.html', {'feedbacks': feedbacks})
