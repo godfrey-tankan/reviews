@@ -12,6 +12,7 @@ urlpatterns = [
     path('feedbacks/details/', feedback_detail, name='feedback_detail'),
     path('feedback/<int:user_id>/details/', feedback_details, name='detailed_feedback_page'),
      path('feedback/<int:user_id>/details/', get_user_feedback, name='user_feedback_details'),
+     
     # path('members/',test,name='members')
     
 ]

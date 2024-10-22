@@ -9,7 +9,7 @@ from a_bot.views import get_text_message_input,send_message
 from django.contrib.auth.decorators import login_required
 from .models import *
 from django.db.models import Count, Avg, OuterRef, Subquery,When, IntegerField, Case
-
+from .decorators import check_user_feedback
 
 
 
@@ -138,6 +138,7 @@ def aggregated_feedback_view(request):
 
     return render(request, 'feedbacks/aggregated_feedback.html', context)
 
+@check_user_feedback
 @login_required
 def demographic_data_view(request):
     if request.method == 'POST':

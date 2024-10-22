@@ -35,12 +35,12 @@
         .card {
             background: white; /* White card background */
             border-radius: 10px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             flex: 1 1 calc(30% - 20px);
             min-width: 250px;
             max-width: 300px;
-            height: 200px; /* Increased height for cards */
+            height: max-content; /* Increased height for cards */
             transition: transform 0.2s;
         }
         .card:hover {
@@ -70,7 +70,7 @@
             font-size: 18px;
         }
         .view-more-button:hover {
-            background-color: #0056b3; /* Darker shade on hover */
+            background-color: #556; /* Darker shade on hover */
         }
     </style>
 </head>
@@ -84,7 +84,7 @@
             <p>{{ total_participants }}</p>
         </div>
         <div class="card">
-            <h3>Most Proper Operating Department</h3>
+            <h3>High Rated Department</h3>
             <p>
                 {% if most_proper_department %}
                     {{ most_proper_department.department }} - Average Feedback: {{ most_proper_department.avg_feedback|floatformat:2 }}
