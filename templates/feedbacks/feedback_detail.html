@@ -61,8 +61,8 @@
     <div class="feedback-list">
         {% for feedback in feedbacks %}
             <div class="feedback-item" onclick="showPopup('{{ feedback.user_id.id }}')">
-                <p>User: {{ feedback.user_id.username }}</p>
-                <p>Date: {{ feedback.response_date|date:"Y-m-d" }}</p>
+                <p><strong>User</strong>: Annonymous User {{ forloop.counter }}</p>
+                <p><strong>Date </strong>: {{ feedback.response_date|date:"Y-m-d" }}</p>
             </div>
         {% endfor %}
     </div>
@@ -71,7 +71,9 @@
         <div class="popup-content" onclick="event.stopPropagation()">
             <span class="close" onclick="closePopup(event)">&times;</span>
             <h3>Feedback Details</h3>
-            <div id="popup-details"></div>
+            <div id="popup-details">
+                
+            </div>
         </div>
     </div>
 
@@ -80,9 +82,13 @@
             fetch(`/feedback/${userId}/details/`)
                 .then(response => response.json())
                 .then(data => {
-                    const details = data.feedbacks.map(feedback => `
-                        <strong>Question:</strong> ${feedback.question__question_text}<br>
-                        <strong>Response:</strong> ${feedback.response}<br>
+                    const details = data.feedbacks.map((feedback, index) => `
+                        <div style="margin-bottom: 20px;"> <!-- Add space after each question-response pair -->
+                            <strong>Question ${index + 1}:</strong> ${feedback.question}<br>
+                            <div style="margin-left: 20px; margin-top: 5px;"> <!-- Indent the response -->
+                                Answer: ${feedback.response}
+                            </div>
+                        </div>
                     `).join('');
                     document.getElementById('popup-details').innerHTML = details || 'No feedback available for this user.';
                     document.getElementById('popup').style.display = 'flex';
@@ -92,10 +98,11 @@
                     document.getElementById('popup-details').innerHTML = 'Error fetching feedback.';
                 });
         }
-
+    
         function closePopup(event) {
             document.getElementById('popup').style.display = 'none';
         }
     </script>
+    
 </body>
 </html>
