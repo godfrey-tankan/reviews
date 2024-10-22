@@ -1,6 +1,6 @@
 from django import forms
 from a_users.models import Individual,Group
-from a_home.models import SurveyAnswer
+from a_home.models import *
 import re
 from django.core.exceptions import ValidationError
 
@@ -57,3 +57,19 @@ class SurveyForm(forms.ModelForm):
     class Meta:
         model = SurveyAnswer
         fields = ['question_id', 'answer']
+
+class DemographicDataForm(forms.ModelForm):
+    class Meta:
+        model = DemographicData
+        fields = [
+            'gender', 'age_group', 'work_experience', 'highest_qualification', 
+            'designation', 'department', 'contract_type'
+        ]
+        widgets = {
+            'gender': forms.RadioSelect,  
+            'age_group': forms.Select,    
+            'work_experience': forms.Select,
+            'highest_qualification': forms.Select,
+            'designation': forms.Select,
+            'contract_type': forms.RadioSelect,  
+        }
