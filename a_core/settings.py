@@ -169,7 +169,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-LOGIN_REDIRECT_URL = '/start/'
+LOGIN_REDIRECT_URL = '/smedco/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
