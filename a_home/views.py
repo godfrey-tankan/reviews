@@ -189,3 +189,14 @@ def feedback_list(request):
 def feedback_detail(request):
     feedbacks = LikertScaleAnswer.objects.select_related('question').all()
     return render(request, 'feedbacks/feedback_detail.html', {'feedbacks': feedbacks})
+
+def get_user_feedback(request, user_id):
+    feedbacks = LikertScaleAnswer.objects.filter(user_id=user_id).select_related('question')
+    feedback_details = [
+        {
+            'question_text': feedback.question.question_text,
+            'response': feedback.get_response_display(),
+            'response_date': feedback.response_date.strftime("%Y-%m-%d %H:%M")
+        } for feedback in feedbacks
+    ]
+    return JsonResponse({'feedbacks': feedback_details})
