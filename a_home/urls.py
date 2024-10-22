@@ -10,7 +10,8 @@ urlpatterns = [
     path('staff-dashboard/', staff_dashboard_view, name='staff_dashboard'),
     path('feedbacks/', feedback_list, name='feedback_list'),
     path('feedbacks/details/', feedback_detail, name='feedback_detail'),
-    path('feedback/<int:feedback_id>/details/', feedback_details, name='detailed_feedback_page'),
+    path('feedback/<int:user_id>/details/', feedback_details, name='detailed_feedback_page'),
+     path('feedback/<int:user_id>/details/', get_user_feedback, name='user_feedback_details'),
     # path('members/',test,name='members')
     
 ]

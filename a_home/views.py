@@ -173,21 +173,33 @@ def thank_you(request):
     return render(request, 'thank_you.html')
 
 
-def feedback_details(request, feedback_id):
-    feedback = get_object_or_404(LikertScaleAnswer, id=feedback_id)
-    details = {
-        'question': feedback.question.question_text,
-        'response': feedback.get_response_display(),
-        'date': feedback.response_date.strftime('%Y-%m-%d %H:%M'),
-    }
-    return JsonResponse({'details': details})
+def feedback_details(request, user_id):
+    # Get all feedback entries for the specific user
+    user = get_object_or_404(User, id=user_id)
+    feedbacks = LikertScaleAnswer.objects.filter(user_id=user)
+
+    feedback_details = []
+    
+    for feedback in feedbacks:
+        details = {
+            'question': feedback.question.question_text,
+            'response': feedback.get_response_display(),
+        }
+        feedback_details.append(details)
+
+    # Check if the user has any feedback
+    if feedback_details:
+        return JsonResponse({'feedbacks': feedback_details})
+    else:
+        return JsonResponse({'feedbacks': []})  #
 
 def feedback_list(request):
     feedbacks = LikertScaleAnswer.objects.select_related('question').order_by('-response_date')[:3]
     return render(request, 'feedbacks/feedback_list.html', {'feedbacks': feedbacks})
 
 def feedback_detail(request):
-    feedbacks = LikertScaleAnswer.objects.select_related('question').all()
+    users = User.objects.all()
+    feedbacks = DemographicData.objects.filter(user_id__in=users).order_by('-response_date')
     return render(request, 'feedbacks/feedback_detail.html', {'feedbacks': feedbacks})
 
 def get_user_feedback(request, user_id):

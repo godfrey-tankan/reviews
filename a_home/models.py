@@ -102,6 +102,7 @@ class DemographicData(models.Model):
     designation = models.CharField(max_length=30, choices=DESIGNATION_CHOICES, default='line_employees')
     department = models.CharField(max_length=100, choices=DEPARTMENT_CHOICES, default='MKT')
     contract_type = models.CharField(max_length=15, choices=CONTRACT_CHOICES, default='permanent')
+    response_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.gender}, {self.age_group}, {self.designation}"
