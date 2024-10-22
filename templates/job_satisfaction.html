@@ -13,8 +13,8 @@
         <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
         <br/>
         <p class="info-icon">Please rate your satisfaction level for the following questions:
-            
-            <span clas='icon-icon' >ℹ️</span>
+                <span clas='icon-icon' >ℹ️</span>
+
             </p>
         <div class="tooltip">
             Your responses will remain anonymous and confidential.<br>
@@ -26,7 +26,7 @@
         {% csrf_token %}
         {% for field in form %}
             <div>
-                <h4>{{ field.label }}</h4>
+                <h2>{{ forloop.counter }}. {{ field.label }}</h2>
                 {{ field }}  <!-- This will render the field (radio buttons) -->
             </div>
         {% empty %}
