@@ -9,16 +9,18 @@
     <link rel="stylesheet" href="{% static 'css/form_styles.css' %}">
 </head>
 <body>
-<form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-        <div>
-            <label>{{ field.label }}</label>
-            {{ field }}
-        </div>
-    {% endfor %}
-    <button type="submit">Submit</button>
-</form>
-
+    <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div>
+                <label>{{ field.label }}</label>
+                {{ field }}  <!-- This will render the field (radio buttons) -->
+            </div>
+        {% empty %}
+            <p>No questions available.</p>  <!-- Display message if no fields -->
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
