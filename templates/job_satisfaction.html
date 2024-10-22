@@ -1,8 +1,5 @@
-{% extends 'layouts/blank.html' %}
 {% load static %}
 
-
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +11,7 @@
 <body>
     <form method="post">
         <h1>Job Satisfaction Survey</h1>  <!-- Add a title for clarity -->
-        <p class="info-icon">Please rate your satisfaction level for the following questions:
+        <p class="info-icon">Please select the most appropriate response for each question:
                 <span clas='icon-icon' >ℹ️</span>
 
             </p>
@@ -37,5 +34,7 @@
         <button type="submit">Submit</button>
     </form>
 </body>
+<footer>
+    <p>Powered by Ultrabank Management Services | &copy; 2024</p>
+</footer>
 </html>
-{% endblock %}
