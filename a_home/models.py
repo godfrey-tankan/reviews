@@ -15,7 +15,7 @@ class JobSatisfactionQuestion(models.Model):
         ('communication', 'Communication'),
         ('health_and_safety', 'Health and Safety'),
     ]
-
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=500)
     category = models.CharField(max_length=50, choices=QUESTION_CATEGORY_CHOICES)
     required = models.BooleanField(default=True)  # Mandatory or optional
@@ -84,6 +84,7 @@ class DemographicData(models.Model):
     ]
     
     # Demographic Fields
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
     age_group = models.CharField(max_length=10, choices=AGE_GROUP_CHOICES)
     work_experience = models.CharField(max_length=10, choices=EXPERIENCE_CHOICES)

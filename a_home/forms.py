@@ -53,11 +53,6 @@ class GroupForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'placeholder': 'Enter group description'})
         }
 
-class SurveyForm(forms.ModelForm):
-    class Meta:
-        model = SurveyAnswer
-        fields = ['question_id', 'answer']
-
 class DemographicDataForm(forms.ModelForm):
     class Meta:
         model = DemographicData
@@ -73,3 +68,16 @@ class DemographicDataForm(forms.ModelForm):
             'designation': forms.Select,
             'contract_type': forms.RadioSelect,  
         }
+
+class JobSatisfactionForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        questions = kwargs.pop('questions')
+        super().__init__(*args, **kwargs)
+
+        for question in questions:
+            self.fields[f'question_{question.id}'] = forms.ChoiceField(
+                choices=LikertScaleAnswer.RESPONSE_CHOICES,
+                label=question.question_text,
+                widget=forms.RadioSelect, 
+                required=question.required
+            )

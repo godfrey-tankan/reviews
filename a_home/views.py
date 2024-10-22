@@ -35,3 +35,4 @@ def survey_results_view(request):
         survey_answers = SurveyAnswer.objects.all()  # Fetch all answers
         return render(request, 'survey_results.html', {'survey_answers': survey_answers})
     return redirect('home')  
+
