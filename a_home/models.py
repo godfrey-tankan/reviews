@@ -15,7 +15,6 @@ class JobSatisfactionQuestion(models.Model):
         ('communication', 'Communication'),
         ('health_and_safety', 'Health and Safety'),
     ]
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=500)
     category = models.CharField(max_length=50, choices=QUESTION_CATEGORY_CHOICES)
     required = models.BooleanField(default=True)  # Mandatory or optional
@@ -34,6 +33,7 @@ class LikertScaleAnswer(models.Model):
         (6, 'Agree very much'),
     ]
 
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(JobSatisfactionQuestion, related_name='answers', on_delete=models.CASCADE)
     response = models.IntegerField(choices=RESPONSE_CHOICES)
     response_date = models.DateTimeField(auto_now_add=True)

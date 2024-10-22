@@ -22,7 +22,9 @@ def demographic_data_view(request):
     if request.method == 'POST':
         form = DemographicDataForm(request.POST)
         if form.is_valid():
-            form.save()
+            demographic_data = form.save(commit=False)
+            demographic_data.user_id = request.user
+            demographic_data.save()
             return redirect('thank_you')
     else:
         form = DemographicDataForm()
@@ -46,7 +48,7 @@ def job_satisfaction_view(request):
             for field_name, response in form.cleaned_data.items():
                 question_id = int(field_name.split('_')[1])
                 question = JobSatisfactionQuestion.objects.get(id=question_id)
-                LikertScaleAnswer.objects.create(question=question, response=response)
+                LikertScaleAnswer.objects.create(user_id=request.user,question=question, response=response)
             return redirect('thank_you') 
     else:
         form = JobSatisfactionForm(questions=questions)
