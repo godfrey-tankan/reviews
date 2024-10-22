@@ -1,5 +1,6 @@
 from django import forms
 from a_users.models import Individual,Group
+from a_home.models import SurveyAnswer
 import re
 from django.core.exceptions import ValidationError
 
@@ -51,3 +52,8 @@ class GroupForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'placeholder': 'Enter group name'}),
             'description': forms.Textarea(attrs={'placeholder': 'Enter group description'})
         }
+
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = SurveyAnswer
+        fields = ['question_id', 'answer']
