@@ -9,10 +9,19 @@
     <link rel="stylesheet" href="{% static 'css/form_styles.css' %}">
 </head>
 <body>
+    
+    <form method="post">
+        {% csrf_token %}
+        <h2>Demographic Data Form
+        </h2>
+        <p>Please fill in the following details:
+            <span class="info-icon">ℹ️</span>
+            <div class="tooltip">
+                Your responses will remain anonymous and confidential.<br>
+                We value your privacy and ensure that your data will only be used for statistical purposes.
+            </div>
 
-<form method="post">
-    {% csrf_token %}
-    <h2>Demographic Data Form</h2>
+        </p>
 
     <div>
         <label>Gender:</label>
