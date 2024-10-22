@@ -23,7 +23,7 @@ def demographic_data_view(request):
             demographic_data = form.save(commit=False)
             demographic_data.user_id = request.user
             demographic_data.save()
-            return redirect('thank_you')
+            return redirect('job_satisfaction')
     else:
         form = DemographicDataForm()
     return render(request, 'demographic_data.html', {'form': form})
