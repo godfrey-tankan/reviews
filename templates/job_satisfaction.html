@@ -1,3 +1,14 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Satisfaction Data Form</title>
+    <link rel="stylesheet" href="{% static 'css/form_styles.css' %}">
+</head>
+<body>
 <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -8,3 +19,6 @@
     {% endfor %}
     <button type="submit">Submit</button>
 </form>
+
+</body>
+</html>
