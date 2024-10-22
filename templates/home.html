@@ -1,78 +1,34 @@
-{% extends 'layouts/blank.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMEDCO Survey - Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
 
-{% block content %}
-<div class="container mx-auto py-8">
-    <h1 class="text-4xl font-bold mb-4">Manage Group Actions</h1>
-
-    <p class="text-lg mb-6">Select a group and perform actions such as sending messages or setting reminders.</p>
-
-    <form method="post" action="{% url 'perform_group_action' %}" class="bg-white shadow-lg rounded-lg p-6">
-
-        {% csrf_token %}
-
-        <!-- Group Selection Section -->
-        <h2 class="text-xl font-bold mb-2">Select Group</h2>
-        <p>Choose a group to perform actions:</p>
-
-        <!-- Grid of Group Cards -->
-        {% if groups %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-                {% for group in groups %}
-                    <div class="bg-gray-100 rounded-lg p-4 shadow hover:shadow-lg transition-shadow duration-200">
-                        <a href="#" class="block text-center" onclick="selectGroup('{{ group.id }}', '{{ group.name }}')">
-                            <h3 class="text-lg font-bold">{{ group.name }}</h3>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <!-- Action Selection Section -->
-            <div id="action-section" class="hidden mb-6">
-                <h2 class="text-xl font-bold mb-2">Select Action</h2>
-                <p>Choose an action to perform on the group:</p>
-                <select id="action-select" name="action" class="textarea bg-gray-100" onchange="showMessageInput(this)">
-                    <option value="" disabled selected>Select an action</option>
-                    <option value="send_message">Send Message</option>
-                    <option value="set_reminder">Set Reminder</option>
-                </select>
-            </div>
-
-            <!-- Message Input Section -->
-            <div id="message-input-section" class="hidden mb-6">
-                <label for="message" class="font-medium">Enter your message:</label>
-                <textarea id="message" name="message" rows="4" class="textarea bg-gray-100 w-full"></textarea>
-                <!-- Submit Button -->
-                <div class="flex justify-end">
-                    <button type="submit" class="button bg-indigo-600">Submit</button>
-                </div>
-            </div>
-
-            <!-- Hidden Group Input -->
-            <input type="hidden" id="selected-group-id" name="group" value="">
-
-        {% else%}
-        <div class="flex justify-end">
-            <a href="{% url 'group_create'%}" class="button bg-indigo-600">Create</a>
-        
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="content">
+            <h1 class="title">Welcome to the SMEDCO Employee Satisfaction Survey</h1>
+            <p class="description">Your feedback matters! Help us improve the workplace by sharing your insights anonymously.</p>
+            <a href="{% url 'login' %}" class="btn">Get Started</a>
         </div>
-        {%endif%}
-    </form>
-</div>
+    </section>
 
-<script>
-    function selectGroup(groupId, groupName) {
-        document.getElementById('selected-group-id').value = groupId; // Set selected group ID
-        const actionSection = document.getElementById('action-section');
-        actionSection.classList.remove('hidden'); // Show action selection
-    }
-    function showMessageInput(select) {
-        const messageInputSection = document.getElementById('message-input-section');
-        if (select.value === 'send_message') {
-            messageInputSection.classList.remove('hidden');
-        } else {
-            messageInputSection.classList.add('hidden');
-        }
-    }
-</script>
+    <!-- Optional Additional Sections -->
+    <section class="about">
+        <h2>What You Can Expect</h2>
+        <p>Take a short, 20-minute survey that helps us understand your needs, experiences, and opportunities for improvement. Your responses will remain anonymous and confidential.</p>
+    </section>
 
-{% endblock %}
+    <footer>
+        <p>Powered by Ultrabank Management Services | &copy; 2024</p>
+    </footer>
+
+    <!-- Optional Script for Animations -->
+    <script src="{% static 'js/landing.js' %}"></script>
+</body>
+</html>
