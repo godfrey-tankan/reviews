@@ -31,8 +31,24 @@ def demographic_data_view(request):
 
 @login_required
 def survey_results_view(request):
-    if request.user.is_staff:  # Assuming managing people have 'staff' status
-        survey_answers = SurveyAnswer.objects.all()  # Fetch all answers
+    if request.user.is_staff: 
+        survey_answers = SurveyAnswer.objects.all() 
         return render(request, 'survey_results.html', {'survey_answers': survey_answers})
     return redirect('home')  
 
+@login_required
+def job_satisfaction_view(request):
+    questions = JobSatisfactionQuestion.objects.all()
+
+    if request.method == 'POST':
+        form = JobSatisfactionForm(request.POST, questions=questions)
+        if form.is_valid():
+            for field_name, response in form.cleaned_data.items():
+                question_id = int(field_name.split('_')[1])
+                question = JobSatisfactionQuestion.objects.get(id=question_id)
+                LikertScaleAnswer.objects.create(question=question, response=response)
+            return redirect('thank_you') 
+    else:
+        form = JobSatisfactionForm(questions=questions)
+
+    return render(request, 'job_satisfaction.html', {'form': form})
