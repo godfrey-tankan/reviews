@@ -1,0 +1,39 @@
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Gender:</label>
+        {{ form.gender }}
+    </div>
+
+    <div>
+        <label>Age Group:</label>
+        {{ form.age_group }}
+    </div>
+
+    <div>
+        <label>Work Experience:</label>
+        {{ form.work_experience }}
+    </div>
+
+    <div>
+        <label>Highest Qualification:</label>
+        {{ form.highest_qualification }}
+    </div>
+
+    <div>
+        <label>Designation:</label>
+        {{ form.designation }}
+    </div>
+
+    <div>
+        <label>Department:</label>
+        {{ form.department }}
+    </div>
+
+    <div>
+        <label>Contract Type:</label>
+        {{ form.contract_type }}
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
