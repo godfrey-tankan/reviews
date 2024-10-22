@@ -14,6 +14,10 @@ class JobSatisfactionQuestion(models.Model):
         ('nature_of_work', 'Nature of Work'),
         ('communication', 'Communication'),
         ('health_and_safety', 'Health and Safety'),
+        ('vigour_energy', 'Vigour and Energy'),
+        ('dedication', 'Dedication'),
+        ('absorption', 'Absorption'),
+        
     ]
     question_text = models.CharField(max_length=500)
     category = models.CharField(max_length=50, choices=QUESTION_CATEGORY_CHOICES)
